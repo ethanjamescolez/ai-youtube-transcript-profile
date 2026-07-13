@@ -1,0 +1,14 @@
+version: 2
+
+build:
+  os: ubuntu-24.04
+  tools:
+    python: "3.13"
+  jobs:
+    install:
+      - python -m pip install Markdown
+    build:
+      html:
+        - mkdir -p "$READTHEDOCS_OUTPUT/html"
+        - >-
+          python -c "from pathlib import Path; import markdown; source = Path('README.md').read_text(encoding='utf-8'); body = markdown.markdown(source, extensions=['extra']); page = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI YouTube Transcript workflow docs</title><style>body{font-family:system-ui,-apple-system,sans-serif;max-width:880px;margin:40px auto;padding:0 20px;line-height:1.65;color:#24292f}a{color:#0969da}code{background:#f6f8fa;padding:.15em .3em;border-radius:4px}h1,h2{line-height:1.25}</style></head><body>' + body + '</body></html>'; Path('$READTHEDOCS_OUTPUT/html/index.html').write_text(page, encoding='utf-8')"
